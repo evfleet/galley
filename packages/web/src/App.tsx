@@ -1,14 +1,9 @@
-import { message } from "@galley/common";
+import { RouterProvider } from "@tanstack/react-router";
+
+import { router } from "./routes";
 
 function App() {
-  return (
-    <>
-      <div>
-        <h1>Hello World</h1>
-        <p>{message}</p>
-      </div>
-    </>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
