@@ -4,16 +4,19 @@
   "private": true,
   "author": "Evan Fleet",
   "scripts": {
-    "dev": "tsx watch ./src/index.ts"
+    "dev": "tsx watch ./src/index.ts | pino-pretty"
   },
   "dependencies": {
     "@galley/common": "workspace:^",
     "dotenv": "^16.3.1",
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "pino": "^8.17.2",
+    "pino-http": "^9.0.0"
   },
   "devDependencies": {
     "@types/express": "^4.17.21",
     "@types/node": "^20.10.6",
+    "pino-pretty": "^10.3.1",
     "tsx": "^4.7.0",
     "typescript": "^5.3.3"
   }
