@@ -16,6 +16,4 @@ const registerRoute = new Route({
   getParentRoute: () => rootRoute,
 });
 
-const authRoutes = [loginRoute, registerRoute];
-
-export { authRoutes };
+export const authRoutes = [loginRoute, registerRoute];
