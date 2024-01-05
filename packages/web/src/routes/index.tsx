@@ -2,6 +2,7 @@ import React, { Suspense } from "react";
 import { Outlet, RootRoute, Router } from "@tanstack/react-router";
 
 import { authRoutes } from "@/features/auth";
+import { miscRoutes } from "@/features/misc";
 
 // eslint-disable-next-line
 const TanStackRouterDevtools =
@@ -22,7 +23,7 @@ const rootRoute = new RootRoute({
   ),
 });
 
-const routeTree = rootRoute.addChildren([...authRoutes]);
+const routeTree = rootRoute.addChildren([...authRoutes, ...miscRoutes]);
 
 const router = new Router({ routeTree });
 
