@@ -1,5 +1,7 @@
-import React from "react";
-import { Outlet, RootRoute, Route, Router } from "@tanstack/react-router";
+import React, { Suspense } from "react";
+import { Outlet, RootRoute, Router } from "@tanstack/react-router";
+
+import { authRoutes } from "@/features/auth";
 
 // eslint-disable-next-line
 const TanStackRouterDevtools =
@@ -13,31 +15,21 @@ const TanStackRouterDevtools =
 
 const rootRoute = new RootRoute({
   component: () => (
-    <>
+    <Suspense>
       <Outlet />
       <TanStackRouterDevtools />
-    </>
+    </Suspense>
   ),
 });
 
-const landingRoute = new Route({
-  getParentRoute: () => rootRoute,
-  path: "/",
-  component: function LandingPage() {
-    return (
-      <div>
-        <p>Landing</p>
-      </div>
-    );
-  },
-});
+const routeTree = rootRoute.addChildren([...authRoutes]);
 
-const routeTree = rootRoute.addChildren([landingRoute]);
-
-export const router = new Router({ routeTree });
+const router = new Router({ routeTree });
 
 declare module "@tanstack/react-router" {
   interface Register {
     router: typeof router;
   }
 }
+
+export { rootRoute, router };
