@@ -8,6 +8,10 @@ services:
       - 8081:8081
     volumes:
       - ./packages/api:/code/packages/api
+    environment:
+      - POSTGRES_DB=galley
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
   database:
     image: postgres:16-alpine
     ports:
@@ -15,6 +19,7 @@ services:
     volumes:
       - data:/var/lib/postgresql/data
     environment:
+      - POSTGRES_DB=galley
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
 volumes:
