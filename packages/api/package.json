@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "author": "Evan Fleet",
+  "type": "module",
   "scripts": {
     "dev": "tsx watch ./src/index.ts | pino-pretty"
   },
