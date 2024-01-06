@@ -1,15 +1,18 @@
 import express from "express";
-import pino from "pino-http";
+import { pinoHttp } from "pino-http";
 
-import { pool } from "@/config/database";
-import { logger } from "@/config/logger";
+import { pool } from "@/config/database.js";
+import { logger } from "@/config/logger.js";
+import { authRouter } from "./features/auth/auth.routes.js";
 
 export async function build() {
   const app = express();
 
   app.use(express.json());
 
-  app.use(pino({ logger }));
+  app.use(pinoHttp({ logger }));
+
+  app.use("/auth", authRouter);
 
   app.get("/", async (req, res) => {
     const result = await pool.query("SELECT NOW()");

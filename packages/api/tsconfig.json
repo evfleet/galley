@@ -13,6 +13,7 @@
     "module": "NodeNext",
     "outDir": "dist",
     "sourceMap": true,
+    "allowSyntheticDefaultImports": true,
     "lib": [
       "es2022"
     ],
