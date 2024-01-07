@@ -1,8 +1,5 @@
 import { Pool } from "pg";
 
 export const pool = new Pool({
-  user: process.env.POSTGRES_USER,
-  host: "database",
-  database: process.env.POSTGRES_DB,
-  password: process.env.POSTGRES_PASSWORD,
+  connectionString: process.env.DATABASE_URL,
 });
