@@ -81,6 +81,9 @@ importers:
 
   packages/web:
     dependencies:
+      '@galley/common':
+        specifier: workspace:^
+        version: link:../common
       next:
         specifier: 14.0.4
         version: 14.0.4(react-dom@18.2.0)(react@18.2.0)
