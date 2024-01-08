@@ -3,24 +3,11 @@ services:
     build:
       target: develop
       context: .
-      dockerfile: ./packages/api/Dockerfile
+      dockerfile: ./Dockerfile.dev
     ports:
-      - 8081:8081
+      - ${PORT}:${PORT}
     volumes:
       - ./packages/api:/code/packages/api
     environment:
-      - POSTGRES_DB=galley
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-  database:
-    image: postgres:16-alpine
-    ports:
-      - 5432:5432
-    volumes:
-      - data:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_DB=galley
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-volumes:
-  data:
+      - PORT=${PORT}
+      - DATABASE_URL=${DATABASE_URL}
