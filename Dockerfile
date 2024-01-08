@@ -17,6 +17,7 @@ RUN pnpm fetch
 COPY --from=builder /code/packages/common /code/packages/common
 COPY --chown=node:node packages/api ./packages/api
 RUN pnpm install --prod -r --offline
+RUN pnpm --filter @galley/api run build
 USER node
 EXPOSE ${PORT}
 CMD ["node", "./packages/api/dist/index.js"]
