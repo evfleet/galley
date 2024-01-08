@@ -18,7 +18,6 @@ COPY --chown=node:node packages/api ./packages/api
 COPY --from=builder /code/packages/common /code/packages/common
 COPY --from=builder /code/packages/api /code/packages/api
 RUN pnpm install --prod -r --offline
-RUN pnpm --filter @galley/api run build
 USER node
 EXPOSE ${PORT}
 CMD ["node", "./packages/api/dist/index.js"]
