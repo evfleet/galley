@@ -1,19 +1,9 @@
-import { Route } from "@tanstack/react-router";
+import { RouteObject } from "react-router-dom";
 
-import { rootRoute } from "@/routes";
 import { LoginPage } from "./Login";
 import { RegisterPage } from "./Register";
 
-const loginRoute = new Route({
-  path: "/auth/login",
-  component: LoginPage,
-  getParentRoute: () => rootRoute,
-});
-
-const registerRoute = new Route({
-  path: "/auth/register",
-  component: RegisterPage,
-  getParentRoute: () => rootRoute,
-});
-
-export const authRoutes = [loginRoute, registerRoute];
+export const authRoutes: RouteObject[] = [
+  { path: "/auth/login", element: <LoginPage /> },
+  { path: "/auth/register", element: <RegisterPage /> },
+];
