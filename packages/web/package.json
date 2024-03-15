@@ -12,12 +12,11 @@
   },
   "dependencies": {
     "@galley/common": "workspace:^",
-    "@tanstack/react-router": "^1.1.6",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.22.3"
   },
   "devDependencies": {
-    "@tanstack/router-devtools": "^1.1.6",
     "@types/node": "^20.10.6",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
