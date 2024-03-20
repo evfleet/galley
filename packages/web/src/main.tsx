@@ -1,15 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { createServer } from "miragejs";
 
 import "./main.css";
-import App from "./App.tsx";
+import { App } from "./App.tsx";
+import { makeServer } from "./mocks/server.ts";
 
-createServer({
-  routes() {
-    this.namespace = "api";
-  },
-});
+if (!import.meta.env.PROD) {
+  makeServer();
+}
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
