@@ -7,8 +7,8 @@ export function makeServer() {
     routes() {
       this.namespace = "api";
 
-      this.get("/test", () => {
-        return { message: "Hello from Mirage!" };
+      this.get("/collections", () => {
+        return [];
       });
     },
   });
