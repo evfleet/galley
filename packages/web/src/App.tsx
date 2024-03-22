@@ -1,7 +1,8 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
+import { PrivateRoute } from "@/components/PrivateRoute";
 import { authRoutes } from "@/features/auth";
-import { miscRoutes, PrivateRoute } from "@/features/misc";
+import { miscRoutes } from "@/features/misc";
 
 const router = createBrowserRouter([
   ...authRoutes,
