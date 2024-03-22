@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 
-import { useUser } from "@/features/auth/api/user";
+import { useUser } from "@/features/auth";
 
 export function PrivateRoute() {
   const navigate = useNavigate();
