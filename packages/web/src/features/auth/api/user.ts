@@ -1,10 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 
 async function fetchUser() {
-  return {
-    id: 123,
-    username: "Soandso",
-  };
+  return false;
 }
 
 export function useUser() {
