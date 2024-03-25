@@ -1,7 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 
 async function fetchUser() {
-  return false;
+  return {
+    id: 1,
+  };
 }
 
 export function useUser() {
