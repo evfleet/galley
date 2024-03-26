@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { Link } from "react-router-dom";
 
 export function LandingPage() {
   const { data, error, status } = useQuery({
@@ -14,6 +15,8 @@ export function LandingPage() {
   return (
     <div>
       <h1>Landing</h1>
+      <p>You have no recipes</p>
+      <Link to="/recipes/create">Create a recipe</Link>
     </div>
   );
 }

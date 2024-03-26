@@ -4,6 +4,7 @@ import { PrivateRoute } from "@/components/PrivateRoute";
 import { PublicRoute } from "@/components/PublicRoute";
 import { authRoutes } from "@/features/auth";
 import { miscRoutes } from "@/features/misc";
+import { recipeRoutes } from "@/features/recipes";
 
 const router = createBrowserRouter([
   {
@@ -12,7 +13,7 @@ const router = createBrowserRouter([
   },
   {
     element: <PrivateRoute />,
-    children: [...miscRoutes],
+    children: [...miscRoutes, ...recipeRoutes],
   },
 ]);
 
