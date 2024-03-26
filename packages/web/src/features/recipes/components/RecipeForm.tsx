@@ -1,29 +1,22 @@
-import { useForm, useFieldArray } from "react-hook-form";
+import { useForm } from "react-hook-form";
+
+import { RecipeFieldArray } from "./RecipeFieldArray";
+
+export type RecipeFormData = {
+  name: string;
+  description: string;
+  ingredients: { value: string }[];
+  directions: { value: string }[];
+};
 
 export function RecipeForm() {
-  const { control, register, handleSubmit, watch } = useForm({
+  const { control, register, handleSubmit, watch } = useForm<RecipeFormData>({
     defaultValues: {
-      ingredients: [{ ingredient: "" }],
-      directions: [{ direction: "" }],
+      name: "",
+      description: "",
+      ingredients: [{ value: "Hello" }, { value: "World" }],
+      directions: [{ value: "" }],
     },
-  });
-
-  const {
-    fields: ingredientFields,
-    append: ingredientAppend,
-    remove: ingredientRemove,
-  } = useFieldArray({
-    control,
-    name: "ingredients",
-  });
-
-  const {
-    fields: directionFields,
-    append: directionAppend,
-    remove: directionRemove,
-  } = useFieldArray({
-    control,
-    name: "directions",
   });
 
   function onSubmit(data: unknown) {
@@ -31,60 +24,34 @@ export function RecipeForm() {
   }
 
   return (
-    <div>
-      <h1>Recipe Form</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          <h2>Ingredients</h2>
-          {ingredientFields.map((field, index) => (
-            <div key={field.id}>
-              <input {...register(`ingredients.${index}.ingredient`)} />
-              {ingredientFields.length > 1 && (
-                <button type="button" onClick={() => ingredientRemove(index)}>
-                  Delete
-                </button>
-              )}
-            </div>
-          ))}
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <div className="flex flex-col">
+        <label className="text-lg font-semibold">Name</label>
+        <input className="w-11/12 border-2" {...register("name")} />
+      </div>
 
-          <button
-            type="button"
-            disabled={
-              watch("ingredients")[ingredientFields.length - 1].ingredient ===
-              ""
-            }
-            onClick={() => ingredientAppend({ ingredient: "" })}
-          >
-            Add
-          </button>
-        </div>
+      <div className="flex flex-col">
+        <label className="text-lg font-semibold">Description</label>
+        <input className="w-11/12 border-2" {...register("description")} />
+      </div>
 
-        <div>
-          <h2>Directions</h2>
-          {directionFields.map((field, index) => (
-            <div key={field.id}>
-              <input {...register(`directions.${index}.direction`)} />
-              {directionFields.length > 1 && (
-                <button type="button" onClick={() => directionRemove(index)}>
-                  Delete
-                </button>
-              )}
-            </div>
-          ))}
+      <RecipeFieldArray
+        name="ingredients"
+        control={control}
+        register={register}
+        watch={watch}
+      />
 
-          <button
-            type="button"
-            disabled={
-              watch("directions")[directionFields.length - 1].direction === ""
-            }
-            onClick={() => directionAppend({ direction: "" })}
-          >
-            Add
-          </button>
-        </div>
+      <RecipeFieldArray
+        name="directions"
+        control={control}
+        register={register}
+        watch={watch}
+      />
 
-        <button type="submit">Submit</button>
-      </form>
-    </div>
+      <button type="submit" className="bg-gray-500 text-white py-2 px-4">
+        Submit
+      </button>
+    </form>
   );
 }
