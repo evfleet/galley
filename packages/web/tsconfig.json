@@ -23,13 +23,19 @@
     "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
     "paths": {
+      "@/test/*": [
+        "./test/*"
+      ],
       "@/*": [
         "./src/*"
       ]
-    }
+    },
+    "types": [
+      "@testing-library/jest-dom"
+    ]
   },
   "include": [
-    "src"
+    "src",
   ],
   "references": [
     {
