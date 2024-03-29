@@ -42,24 +42,27 @@ export function RecipeFieldArray({
         {name}
       </legend>
 
-      {fields.map((field, index) => (
-        <div key={field.id} className="flex">
-          <input
-            {...register(`${name}.${index}.value`)}
-            className="w-11/12 border-2"
-          />
-          {fields.length > 1 && (
-            <button
-              type="button"
-              onClick={() => remove(index)}
-              className="flex w-1/12 items-center justify-center"
-            >
-              <Trash2 />
-              <span className="sr-only">Delete</span>
-            </button>
-          )}
-        </div>
-      ))}
+      <ul>
+        {fields.map((field, index) => (
+          <li key={field.id} className="flex">
+            <input
+              {...register(`${name}.${index}.value`)}
+              aria-label={`${name} ${index + 1}`}
+              className="w-11/12 border-2"
+            />
+            {fields.length > 1 && (
+              <button
+                type="button"
+                onClick={() => remove(index)}
+                className="flex w-1/12 items-center justify-center"
+              >
+                <Trash2 />
+                <span className="sr-only">{`Delete ${name} ${index + 1}`}</span>
+              </button>
+            )}
+          </li>
+        ))}
+      </ul>
 
       <div className="flex justify-end">
         <button

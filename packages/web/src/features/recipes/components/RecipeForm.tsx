@@ -45,7 +45,7 @@ export function RecipeForm() {
   // }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form name="recipe-form" onSubmit={handleSubmit(onSubmit)}>
       <div className="flex flex-col">
         <label htmlFor="name" className="text-lg font-semibold">
           Name
