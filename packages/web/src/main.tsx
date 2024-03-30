@@ -5,19 +5,30 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import "./main.css";
 import { App } from "./App.tsx";
-import { makeServer } from "./mocks/server.ts";
 
-if (!import.meta.env.PROD) {
-  makeServer();
+async function enableMocking() {
+  const { worker } = await import("./mocks/worker.ts");
+
+  return worker.start({
+    onUnhandledRequest(req, print) {
+      if (req.url.startsWith("/api/")) {
+        print.warning();
+      }
+
+      return;
+    },
+  });
 }
 
 const queryClient = new QueryClient();
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <App />
-      <ReactQueryDevtools />
-    </QueryClientProvider>
-  </React.StrictMode>
-);
+enableMocking().then(() => {
+  ReactDOM.createRoot(document.getElementById("root")!).render(
+    <React.StrictMode>
+      <QueryClientProvider client={queryClient}>
+        <App />
+        <ReactQueryDevtools />
+      </QueryClientProvider>
+    </React.StrictMode>
+  );
+});

@@ -1,7 +1,7 @@
 import { screen } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
 
-import { setup } from "@/test/setup";
+import { render } from "@/test/render";
 import { createQueryWrapper } from "@/test/wrappers/query";
 import { RecipeForm } from "./RecipeForm";
 
@@ -9,7 +9,7 @@ expect.extend(toHaveNoViolations);
 
 describe("RecipeForm", () => {
   it("should render the form", () => {
-    setup(<RecipeForm />, {
+    render(<RecipeForm />, {
       wrapper: createQueryWrapper(),
     });
 
@@ -17,7 +17,7 @@ describe("RecipeForm", () => {
   });
 
   it("should render without a11y violations", async () => {
-    const { container } = setup(<RecipeForm />, {
+    const { container } = render(<RecipeForm />, {
       wrapper: createQueryWrapper(),
     });
 
@@ -27,7 +27,7 @@ describe("RecipeForm", () => {
   });
 
   it("should render with all the necessary fields", async () => {
-    setup(<RecipeForm />, {
+    render(<RecipeForm />, {
       wrapper: createQueryWrapper(),
     });
 
@@ -38,7 +38,7 @@ describe("RecipeForm", () => {
   });
 
   it("should render a single input if not passed multiple values for a dynamic field", () => {
-    setup(<RecipeForm />, {
+    render(<RecipeForm />, {
       wrapper: createQueryWrapper(),
     });
 
@@ -47,7 +47,7 @@ describe("RecipeForm", () => {
   });
 
   it("should render multiple inputs if passed multiple values for a dynamic field", () => {
-    setup(
+    render(
       <RecipeForm directions={[{ value: "Hello" }, { value: "World" }]} />,
       {
         wrapper: createQueryWrapper(),
@@ -59,7 +59,7 @@ describe("RecipeForm", () => {
   });
 
   it("should only render multiple inputs for the dynamic field that has multiple values", () => {
-    setup(
+    render(
       <RecipeForm
         directions={[{ value: "Hello" }, { value: "World" }]}
         ingredients={[{ value: "" }]}
@@ -76,7 +76,7 @@ describe("RecipeForm", () => {
   });
 
   it("should render a button to add inputs to dynamic fields", async () => {
-    const { user } = setup(<RecipeForm directions={[{ value: "Hello" }]} />, {
+    const { user } = render(<RecipeForm directions={[{ value: "Hello" }]} />, {
       wrapper: createQueryWrapper(),
     });
 
@@ -90,7 +90,7 @@ describe("RecipeForm", () => {
   });
 
   it("should disable the button if the last input of the dynamic field is empty", async () => {
-    setup(<RecipeForm directions={[{ value: "Hello" }, { value: "" }]} />, {
+    render(<RecipeForm directions={[{ value: "Hello" }, { value: "" }]} />, {
       wrapper: createQueryWrapper(),
     });
 
@@ -100,7 +100,7 @@ describe("RecipeForm", () => {
   });
 
   it("should enable the button when a value is input into the last input of the dynamic field", async () => {
-    const { user } = setup(
+    const { user } = render(
       <RecipeForm directions={[{ value: "Hello" }, { value: "" }]} />,
       {
         wrapper: createQueryWrapper(),
