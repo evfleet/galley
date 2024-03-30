@@ -1,11 +1,8 @@
 import "@testing-library/jest-dom/vitest";
-import { render, RenderOptions } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import { ReactNode } from "react";
+import { afterAll, afterEach, beforeAll } from "vitest";
 
-export function setup(jsx: ReactNode, options?: RenderOptions) {
-  return {
-    user: userEvent.setup(),
-    ...render(jsx, options),
-  };
-}
+import { server } from "./server";
+
+beforeAll(() => server.listen());
+afterEach(() => server.resetHandlers());
+afterAll(() => server.close());
