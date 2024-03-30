@@ -10,13 +10,13 @@ export type RecipeFormData = {
   ingredients: { value: string }[];
 };
 
-export type RecipeFormProps = RecipeFormData;
+export type RecipeFormProps = Partial<RecipeFormData>;
 
 export function RecipeForm({
-  name,
-  description,
-  directions,
-  ingredients,
+  name = "",
+  description = "",
+  directions = [{ value: "" }],
+  ingredients = [{ value: "" }],
 }: RecipeFormProps) {
   const { control, register, handleSubmit, watch } = useForm<RecipeFormData>({
     defaultValues: {
@@ -91,10 +91,3 @@ export function RecipeForm({
     </form>
   );
 }
-
-RecipeForm.defaultProps = {
-  name: "",
-  description: "",
-  directions: [{ value: "" }],
-  ingredients: [{ value: "" }],
-};
