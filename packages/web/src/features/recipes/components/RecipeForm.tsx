@@ -1,6 +1,5 @@
 import { useForm } from "react-hook-form";
 
-import { useCreateRecipe } from "../api/create-recipe";
 import { RecipeFieldArray } from "./RecipeFieldArray";
 
 export type RecipeFormData = {
@@ -10,9 +9,12 @@ export type RecipeFormData = {
   ingredients: { value: string }[];
 };
 
-export type RecipeFormProps = Partial<RecipeFormData>;
+export type RecipeFormProps = Partial<RecipeFormData> & {
+  onSubmit?: (data: RecipeFormData) => void;
+};
 
 export function RecipeForm({
+  onSubmit = () => {},
   name = "",
   description = "",
   directions = [{ value: "" }],
@@ -26,30 +28,6 @@ export function RecipeForm({
       ingredients,
     },
   });
-
-  const { mutate } = useCreateRecipe();
-
-  function onSubmit(data: RecipeFormData) {
-    console.log(data);
-
-    const filteredData = {
-      ...data,
-      directions: filterValues(data.directions),
-      ingredients: filterValues(data.ingredients),
-    };
-
-    mutate(filteredData);
-  }
-
-  function filterValues(array: { value: string }[]) {
-    return array.filter((item) => item.value !== "");
-  }
-
-  // function for filtering out empty strings in the state array
-  // to use on the onSubmit function
-  // function filterEmptyStrings(array: { value: string }[]) {
-  //   return array.filter((item) => item.value !== "");
-  // }
 
   return (
     <form name="recipe-form" onSubmit={handleSubmit(onSubmit)}>
