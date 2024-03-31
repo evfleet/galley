@@ -1,34 +1,34 @@
 import {
   Control,
   UseFormRegister,
-  UseFormWatch,
   useFieldArray,
+  useWatch,
 } from "react-hook-form";
 import { Trash2 } from "lucide-react";
 
 import type { RecipeFormData } from "./RecipeForm";
 
-type FieldArrays<T> = {
+type ArrayField<T> = {
   [K in keyof T]: T[K] extends unknown[] ? K : never;
 }[keyof T];
 
 type RecipeFieldArrayProps = {
-  name: FieldArrays<RecipeFormData>;
+  name: ArrayField<RecipeFormData>;
   control: Control<RecipeFormData>;
   register: UseFormRegister<RecipeFormData>;
-  watch: UseFormWatch<RecipeFormData>;
 };
 
 export function RecipeFieldArray({
   name,
   control,
   register,
-  watch,
 }: RecipeFieldArrayProps) {
   const { fields, append, remove } = useFieldArray({
     name,
     control,
   });
+
+  const values = useWatch({ name, control });
 
   return (
     <fieldset
@@ -76,7 +76,7 @@ export function RecipeFieldArray({
       <div className="flex justify-end">
         <button
           type="button"
-          disabled={watch(name)[fields.length - 1].value === ""}
+          disabled={values[values.length - 1].value === ""}
           onClick={() => append({ value: "" })}
           className="bg-gray-400 px-2 py-1 capitalize"
         >
