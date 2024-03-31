@@ -20,7 +20,7 @@ export function RecipeForm({
   directions = [{ value: "" }],
   ingredients = [{ value: "" }],
 }: RecipeFormProps) {
-  const { control, register, handleSubmit, watch } = useForm<RecipeFormData>({
+  const { control, register, handleSubmit } = useForm<RecipeFormData>({
     defaultValues: {
       name,
       description,
@@ -53,14 +53,12 @@ export function RecipeForm({
         name="ingredients"
         control={control}
         register={register}
-        watch={watch}
       />
 
       <RecipeFieldArray
         name="directions"
         control={control}
         register={register}
-        watch={watch}
       />
 
       <button type="submit" className="bg-gray-500 text-white py-2 px-4">
