@@ -1,5 +1,6 @@
 import { screen } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
+import { vi } from "vitest";
 
 import { render } from "@/test/render";
 import { createQueryWrapper } from "@/test/wrappers/query";
@@ -9,9 +10,7 @@ expect.extend(toHaveNoViolations);
 
 describe("RecipeForm", () => {
   it("should render the form", () => {
-    render(<RecipeForm />, {
-      wrapper: createQueryWrapper(),
-    });
+    render(<RecipeForm />);
 
     expect(screen.getByRole("form")).toBeInTheDocument();
   });
@@ -27,9 +26,7 @@ describe("RecipeForm", () => {
   });
 
   it("should render with all the necessary fields", async () => {
-    render(<RecipeForm />, {
-      wrapper: createQueryWrapper(),
-    });
+    render(<RecipeForm />);
 
     expect(screen.getByLabelText(/name/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/description/i)).toBeInTheDocument();
@@ -37,10 +34,17 @@ describe("RecipeForm", () => {
     expect(screen.getByLabelText(/ingredients-1/i)).toBeInTheDocument();
   });
 
+  it("should call the onSubmit function in props when submitting the form", async () => {
+    const onSubmit = vi.fn();
+    const { user } = render(<RecipeForm onSubmit={onSubmit} />);
+
+    await user.click(screen.getByRole("button", { name: /submit/i }));
+
+    expect(onSubmit).toHaveBeenCalled();
+  });
+
   it("should render a single input if not passed multiple values for a dynamic field", () => {
-    render(<RecipeForm />, {
-      wrapper: createQueryWrapper(),
-    });
+    render(<RecipeForm />);
 
     expect(screen.queryByLabelText(/directions-2/i)).not.toBeInTheDocument();
     expect(screen.queryByLabelText(/ingredients-2/i)).not.toBeInTheDocument();
@@ -48,10 +52,7 @@ describe("RecipeForm", () => {
 
   it("should render multiple inputs if passed multiple values for a dynamic field", () => {
     render(
-      <RecipeForm directions={[{ value: "Hello" }, { value: "World" }]} />,
-      {
-        wrapper: createQueryWrapper(),
-      }
+      <RecipeForm directions={[{ value: "Hello" }, { value: "World" }]} />
     );
 
     expect(screen.getByLabelText(/directions-1/i)).toBeInTheDocument();
@@ -63,10 +64,7 @@ describe("RecipeForm", () => {
       <RecipeForm
         directions={[{ value: "Hello" }, { value: "World" }]}
         ingredients={[{ value: "" }]}
-      />,
-      {
-        wrapper: createQueryWrapper(),
-      }
+      />
     );
 
     expect(screen.getByLabelText(/directions-1/i)).toBeInTheDocument();
@@ -76,9 +74,7 @@ describe("RecipeForm", () => {
   });
 
   it("should render a button to add inputs to dynamic fields", async () => {
-    const { user } = render(<RecipeForm directions={[{ value: "Hello" }]} />, {
-      wrapper: createQueryWrapper(),
-    });
+    const { user } = render(<RecipeForm directions={[{ value: "Hello" }]} />);
 
     expect(
       await screen.queryByLabelText(/directions-2/i)
@@ -90,9 +86,7 @@ describe("RecipeForm", () => {
   });
 
   it("should disable the button if the last input of the dynamic field is empty", async () => {
-    render(<RecipeForm directions={[{ value: "Hello" }, { value: "" }]} />, {
-      wrapper: createQueryWrapper(),
-    });
+    render(<RecipeForm directions={[{ value: "Hello" }, { value: "" }]} />);
 
     expect(
       screen.getByRole("button", { name: /add direction/i })
@@ -101,10 +95,7 @@ describe("RecipeForm", () => {
 
   it("should enable the button when a value is input into the last input of the dynamic field", async () => {
     const { user } = render(
-      <RecipeForm directions={[{ value: "Hello" }, { value: "" }]} />,
-      {
-        wrapper: createQueryWrapper(),
-      }
+      <RecipeForm directions={[{ value: "Hello" }, { value: "" }]} />
     );
 
     expect(
