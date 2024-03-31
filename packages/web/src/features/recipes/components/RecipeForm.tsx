@@ -1,12 +1,13 @@
 import { useForm } from "react-hook-form";
 
 import { RecipeFieldArray } from "./RecipeFieldArray";
+import { defaultRecipeValues } from "../config/constants";
 
 export type RecipeFormData = {
   name: string;
   description: string;
-  directions: { value: string }[];
   ingredients: { value: string }[];
+  directions: { value: string }[];
 };
 
 export type RecipeFormProps = Partial<RecipeFormData> & {
@@ -15,17 +16,17 @@ export type RecipeFormProps = Partial<RecipeFormData> & {
 
 export function RecipeForm({
   onSubmit = () => {},
-  name = "",
-  description = "",
-  directions = [{ value: "" }],
-  ingredients = [{ value: "" }],
+  name = defaultRecipeValues.name,
+  description = defaultRecipeValues.description,
+  ingredients = defaultRecipeValues.ingredients,
+  directions = defaultRecipeValues.directions,
 }: RecipeFormProps) {
   const { control, register, handleSubmit } = useForm<RecipeFormData>({
     defaultValues: {
       name,
       description,
-      directions,
       ingredients,
+      directions,
     },
   });
 
