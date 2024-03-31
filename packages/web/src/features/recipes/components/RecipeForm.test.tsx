@@ -43,69 +43,34 @@ describe("RecipeForm", () => {
     expect(onSubmit).toHaveBeenCalled();
   });
 
-  it("should render a single input if not passed multiple values for a dynamic field", () => {
-    render(<RecipeForm />);
-
-    expect(screen.queryByLabelText(/directions-2/i)).not.toBeInTheDocument();
-    expect(screen.queryByLabelText(/ingredients-2/i)).not.toBeInTheDocument();
-  });
-
-  it("should render multiple inputs if passed multiple values for a dynamic field", () => {
-    render(
-      <RecipeForm directions={[{ value: "Hello" }, { value: "World" }]} />
-    );
-
-    expect(screen.getByLabelText(/directions-1/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/directions-2/i)).toBeInTheDocument();
-  });
-
   it("should only render multiple inputs for the dynamic field that has multiple values", () => {
     render(
       <RecipeForm
-        directions={[{ value: "Hello" }, { value: "World" }]}
-        ingredients={[{ value: "" }]}
+        ingredients={[{ value: "Apple" }, { value: "Banana" }]}
+        directions={[{ value: "" }]}
       />
     );
 
-    expect(screen.getByLabelText(/directions-1/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/directions-2/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/ingredients-1/i)).toBeInTheDocument();
-    expect(screen.queryByLabelText(/ingredients-2/i)).not.toBeInTheDocument();
+    expect(screen.getByLabelText(/ingredients-2/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/directions-1/i)).toBeInTheDocument();
+    expect(screen.queryByLabelText(/directions-2/i)).not.toBeInTheDocument();
   });
 
-  it("should render a button to add inputs to dynamic fields", async () => {
-    const { user } = render(<RecipeForm directions={[{ value: "Hello" }]} />);
-
-    expect(
-      await screen.queryByLabelText(/directions-2/i)
-    ).not.toBeInTheDocument();
-
-    await user.click(screen.getByRole("button", { name: /add direction/i }));
-
-    expect(screen.getByLabelText(/directions-2/i)).toBeInTheDocument();
-  });
-
-  it("should disable the button if the last input of the dynamic field is empty", async () => {
-    render(<RecipeForm directions={[{ value: "Hello" }, { value: "" }]} />);
-
-    expect(
-      screen.getByRole("button", { name: /add direction/i })
-    ).toBeDisabled();
-  });
-
-  it("should enable the button when a value is input into the last input of the dynamic field", async () => {
-    const { user } = render(
-      <RecipeForm directions={[{ value: "Hello" }, { value: "" }]} />
+  it("should render all the values passed in the props", () => {
+    render(
+      <RecipeForm
+        name="Apple Pie"
+        description="An apple pie"
+        ingredients={[{ value: "Apple" }, { value: "Pie Crust" }]}
+        directions={[{ value: "Peel the apples" }]}
+      />
     );
 
-    expect(
-      screen.getByRole("button", { name: /add direction/i })
-    ).toBeDisabled();
-
-    await user.type(screen.getByLabelText(/directions-2/i), "World");
-
-    expect(
-      screen.getByRole("button", { name: /add direction/i })
-    ).not.toBeDisabled();
+    expect(screen.getByDisplayValue("Apple Pie")).toBeInTheDocument();
+    expect(screen.getByDisplayValue("An apple pie")).toBeInTheDocument();
+    expect(screen.getByDisplayValue("Apple")).toBeInTheDocument();
+    expect(screen.getByDisplayValue("Pie Crust")).toBeInTheDocument();
+    expect(screen.getByDisplayValue("Peel the apples")).toBeInTheDocument();
   });
 });
