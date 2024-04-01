@@ -1,8 +1,8 @@
 import express from "express";
 import pino from "pino-http";
 
-import { pool } from ".//config/database";
 import { logger } from "./config/logger";
+import { recipeRouter } from "./modules/recipes";
 
 export async function build() {
   const app = express();
@@ -11,11 +11,7 @@ export async function build() {
 
   app.use(pino({ logger }));
 
-  app.get("/", async (req, res) => {
-    const result = await pool.query("SELECT NOW()");
-
-    return res.json({ result });
-  });
+  app.use("/api/recipes", recipeRouter);
 
   return app;
 }
