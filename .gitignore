@@ -129,5 +129,9 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
+# Sqlite files
+*.sqlite
+
 # local files
 notes.txt
+
