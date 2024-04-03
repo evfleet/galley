@@ -18,6 +18,15 @@
     ],
     "types": [
       "vitest/globals"
-    ]
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@/test/*": [
+        "./test/*"
+      ],
+      "@/*": [
+        "./src/*"
+      ]
+    }
   }
 }

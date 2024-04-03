@@ -1,7 +1,7 @@
 import "dotenv/config";
 
-import { build } from "./app.js";
-import { logger } from "./config/logger.js";
+import { build } from "@/app.js";
+import { logger } from "@/config/logger.js";
 
 const start = async () => {
   const app = await build();
