@@ -13,5 +13,14 @@ export async function build() {
 
   app.use("/api/recipes", recipeRouter);
 
+  app.get("/api/health", async (req, res) => {
+    try {
+      return res.json({ status: "ok" });
+    } catch (err) {
+      logger.error(err);
+      return res.status(503).json();
+    }
+  });
+
   return app;
 }
