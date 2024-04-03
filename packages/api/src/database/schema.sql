@@ -1,13 +1,13 @@
 CREATE TABLE users (
-  id INTEGER NOT NULL PRIMARY KEY,
-)
+  id INTEGER NOT NULL PRIMARY KEY
+);
 
 CREATE TABLE sessions (
   id TEXT NOT NULL PRIMARY KEY,
   expires_at INTEGER NOT NULL,
-  user_id INTEGER NOT NULL
+  user_id INTEGER NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users(id)
-)
+);
 
 CREATE TABLE collections (
   id INTEGER NOT NULL PRIMARY KEY,
@@ -16,7 +16,7 @@ CREATE TABLE collections (
   user_id INTEGER NOT NULL,
   -- delete when user is deleted
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
-)
+);
 
 CREATE TABLE recipes (
   id INTEGER NOT NULL PRIMARY KEY,
@@ -35,7 +35,7 @@ CREATE TABLE recipeIterations (
   note TEXT, 
   recipe_id INTEGER NOT NULL,
   FOREIGN KEY (recipe_id) REFERENCES recipes(id)
-)
+);
 
 CREATE TABLE recipeIngredients (
   id INTEGER NOT NULL PRIMARY KEY,
@@ -44,14 +44,11 @@ CREATE TABLE recipeIngredients (
   iteration_id INTEGER NOT NULL,
   -- add measurements and units
   -- how to support 1 tsp of salt but also 1/2 recipe of sauce
-  FOREIGN KEY (iteration_id) REFERENCES recipeIterations(id),
-)
-
--- https://thefirstapril.com/2020/04/22/Polymorphic-Association-in-Relational-Database/
--- polymorphic association
-ALTER TABLE recipeIngredients ADD CONSTRAINT ingredient_type_check CHECK (
-  (
-    (recipe_id is not null)::integer +
-    (ingredient_id is not null)::integer
-  ) = 1
+  FOREIGN KEY (iteration_id) REFERENCES recipeIterations(id)
+  -- https://thefirstapril.com/2020/04/22/Polymorphic-Association-in-Relational-Database/
+  CONSTRAINT chk_either_id_filled CHECK (
+    (ingredient_id IS NULL AND recipe_id IS NOT NULL) OR
+    (ingredient_id IS NOT NULL AND recipe_id IS NULL)
+  )
 );
+
