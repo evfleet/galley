@@ -1,7 +1,7 @@
 import { Express } from "express";
 import request from "supertest";
 
-import { build } from "../../../src/app.js";
+import { build } from "@/app.js";
 
 describe("GET /api/health", () => {
   let app: Express;
