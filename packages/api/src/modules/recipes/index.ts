@@ -1,1 +1,1 @@
-export { recipeRouter } from "./recipe.router";
+export { recipeRouter } from "./recipe.router.js";
