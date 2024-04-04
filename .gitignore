@@ -131,6 +131,7 @@ dist
 
 # Sqlite files
 *.sqlite
+*.sqlite-*
 
 # local files
 notes.txt
