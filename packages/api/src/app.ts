@@ -11,7 +11,7 @@ export async function build() {
 
   app.use(pinoHttp({ logger }));
 
-  app.use("/api/recipes", recipeRouter);
+  app.use("/api/v1/recipes", recipeRouter);
 
   app.get("/api/health", async (req, res) => {
     try {
