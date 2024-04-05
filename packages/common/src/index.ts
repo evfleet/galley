@@ -1,3 +1,1 @@
-const message = "Common Package";
-
-export { message };
+export * from "./schemas/auth";

@@ -11,12 +11,12 @@ describe("GET /api/health", () => {
   });
 
   it("should return status 200", async () => {
-    const res = await request(app).get("/api/health");
-    expect(res.status).toEqual(200);
+    const response = await request(app).get("/api/health");
+    expect(response.status).toEqual(200);
   });
 
   it("should return status ok", async () => {
-    const res = await request(app).get("/api/health");
-    expect(res.body).toEqual({ status: "ok" });
+    const response = await request(app).get("/api/health");
+    expect(response.body).toEqual({ status: "ok" });
   });
 });

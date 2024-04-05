@@ -1,5 +1,7 @@
 CREATE TABLE users (
   id INTEGER NOT NULL PRIMARY KEY
+  email TEXT NOT NULL UNIQUE,
+  hashed_password TEXT NOT NULL
 );
 
 CREATE TABLE sessions (
