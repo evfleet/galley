@@ -2,6 +2,7 @@ import express from "express";
 import { pinoHttp } from "pino-http";
 
 import { logger } from "@/config/logger.js";
+import { authRouter } from "@/modules/auth/index.js";
 import { recipeRouter } from "@/modules/recipes/index.js";
 
 export async function build() {
@@ -11,6 +12,7 @@ export async function build() {
 
   app.use(pinoHttp({ logger }));
 
+  app.use("/api/v1/auth", authRouter);
   app.use("/api/v1/recipes", recipeRouter);
 
   app.get("/api/health", async (req, res) => {

@@ -1,3 +1,5 @@
-const message = "Common Package";
+import { Register, registerSchema } from "./schemas/auth";
 
-export { message };
+export type { Register };
+
+export { registerSchema };
