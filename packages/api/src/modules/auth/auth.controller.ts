@@ -1,14 +1,13 @@
 import { Request, Response } from "express";
-import { z } from "zod";
 
-import { registerSchema } from "@galley/common";
+import { Register } from "@galley/common";
+import authService from "./auth.service.js";
 
 async function register(req: Request, res: Response) {
   try {
-    const { email, password } = res.locals as z.infer<typeof registerSchema>;
+    const { email, password } = res.locals as Register;
 
-    console.log("email", email);
-    console.log("password", password);
+    await authService.register({ email, password });
 
     res.send("success");
   } catch (err) {
