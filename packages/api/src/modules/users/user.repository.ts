@@ -1,20 +1,28 @@
 import { db } from "@/database/database.js";
 
-type CreateUser = {
+type User = {
   id: number;
   email: string;
   hashedPassword: string;
 };
 
-function create({ id, email, hashedPassword }: CreateUser) {
-  const statement = db.prepare(
-    // eslint-disable-next-line prettier/prettier
-    "INSERT INTO users VALUES (@id, @email, @hashedPassword)"
-  );
+type CreateUser = Omit<User, "id">;
 
-  statement.run(id, email, hashedPassword);
+function create(params: CreateUser): User {
+  const sql = db.prepare("INSERT INTO users VALUES (@email, @hashedPassword)");
+  const user = sql.get(params) as User;
+
+  return user;
+}
+
+function findByEmail(email: string) {
+  const sql = db.prepare("SELECT * FROM users WHERE email = @email");
+  const user = sql.get({ email }) as User;
+
+  return user;
 }
 
 export default {
   create,
+  findByEmail,
 };
