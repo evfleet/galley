@@ -14,6 +14,8 @@ describe("POST /api/v1/auth/register", () => {
     const response = await request(app).post("/api/v1/auth/register").send({});
 
     expect(response.status).toBe(400);
+    expect(response.body.message).toBe("Validation error");
+    expect(Array.isArray(response.body.errors)).toBe(true);
   });
 
   it("should return an error when called with an invalid email", async () => {
@@ -23,6 +25,10 @@ describe("POST /api/v1/auth/register", () => {
     });
 
     expect(response.status).toBe(400);
+    expect(response.body.message).toBe("Validation error");
+    expect(
+      response.body.errors.find((error: any) => error.field === "email")
+    ).toBeDefined();
   });
 
   it("should return an error when called with an invalid password", async () => {
@@ -32,5 +38,9 @@ describe("POST /api/v1/auth/register", () => {
     });
 
     expect(response.status).toBe(400);
+    expect(response.body.message).toBe("Validation error");
+    expect(
+      response.body.errors.find((error: any) => error.field === "password")
+    ).toBeDefined();
   });
 });
