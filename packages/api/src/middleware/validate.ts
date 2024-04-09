@@ -9,7 +9,18 @@ export function validate(schema: AnyZodObject) {
       return next();
     } catch (err) {
       if (err instanceof ZodError) {
-        return res.status(400).json({ error: "true" });
+        const errors = err.errors.map(({ message, code, path }) => {
+          return {
+            message,
+            code,
+            field: path.join("."),
+          };
+        });
+
+        return res.status(400).json({
+          message: "Validation error",
+          errors,
+        });
       }
 
       return res.status(500).json({ message: "Internal Server Error" });
