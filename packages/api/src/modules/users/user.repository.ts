@@ -8,11 +8,18 @@ type User = {
 
 type CreateUser = Omit<User, "id">;
 
-function create(params: CreateUser): User {
-  const sql = db.prepare("INSERT INTO users VALUES (@email, @hashedPassword)");
-  const user = sql.get(params) as User;
+function create({ email, hashedPassword }: CreateUser): User {
+  const sql = db.prepare(
+    "INSERT INTO users VALUES (@id, @email, @hashedPassword)",
+  );
+  const result = sql.run({ id: null, email, hashedPassword });
+  const id = result.lastInsertRowid as number;
 
-  return user;
+  return {
+    id,
+    email,
+    hashedPassword,
+  };
 }
 
 function findByEmail(email: string) {
