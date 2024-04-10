@@ -1,3 +1,4 @@
+import { SqliteError } from "better-sqlite3";
 import { Request, Response } from "express";
 
 import { auth } from "@/config/auth.js";
@@ -12,9 +13,18 @@ async function register(req: Request, res: Response) {
     const session = await auth.createSession(user.id, {});
     const sessionCookie = auth.createSessionCookie(session.id);
 
-    res.set("Set-Cookie", sessionCookie.serialize()).send("success");
+    return res
+      .status(201)
+      .set("Set-Cookie", sessionCookie.serialize())
+      .send("success");
   } catch (err) {
-    res.send("fail");
+    console.log("err", err);
+
+    if (err instanceof SqliteError && err.code === "SQLITE_CONSTRAINT_UNIQUE") {
+      return res.status(201).send("fail");
+    }
+
+    return res.status(400).send("fail");
   }
 }
 

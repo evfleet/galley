@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 
 import { db } from "../database.js";
 
-export function createTables() {
+export async function createTables() {
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = path.dirname(__filename);
 
@@ -13,5 +13,3 @@ export function createTables() {
 
   db.exec(sql);
 }
-
-createTables();

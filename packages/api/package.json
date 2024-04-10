@@ -7,7 +7,7 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsx watch ./src/index.ts | pino-pretty",
-    "database:setup": "tsx ./src/database/utils/create-tables.ts",
+    "database:setup": "tsx ./src/database/setup.ts",
     "start": "node ./dist/index.js",
     "test": "vitest",
     "test:dev": "vitest --ui"
