@@ -8,9 +8,8 @@ import authService from "./auth.service.js";
 async function register(req: Request, res: Response) {
   try {
     const { email, password } = res.locals as Register;
-    const user = await authService.register({ email, password });
+    const { session } = await authService.register({ email, password });
 
-    const session = await auth.createSession(user.id, {});
     const sessionCookie = auth.createSessionCookie(session.id);
 
     return res
@@ -18,8 +17,6 @@ async function register(req: Request, res: Response) {
       .set("Set-Cookie", sessionCookie.serialize())
       .send("success");
   } catch (err) {
-    console.log("err", err);
-
     if (err instanceof SqliteError && err.code === "SQLITE_CONSTRAINT_UNIQUE") {
       return res.status(201).send("fail");
     }
