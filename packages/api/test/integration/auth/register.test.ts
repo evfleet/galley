@@ -2,7 +2,6 @@ import { Express } from "express";
 import request from "supertest";
 
 import { build } from "@/app.js";
-import { setupDatabase } from "@/test/utils/database.js";
 
 describe("POST /api/v1/auth/register", () => {
   let app: Express;
@@ -12,8 +11,6 @@ describe("POST /api/v1/auth/register", () => {
   });
 
   it("should return a success response when called with valid params", async () => {
-    await setupDatabase();
-
     const response = await request(app).post("/api/v1/auth/register").send({
       email: "test@example.com",
       password: "password123",
