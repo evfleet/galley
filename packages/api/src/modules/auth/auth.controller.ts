@@ -2,14 +2,13 @@ import { SqliteError } from "better-sqlite3";
 import { Request, Response } from "express";
 
 import { auth } from "@/config/auth.js";
-import { Register } from "@galley/common";
+import { Login, Register } from "@galley/common";
 import authService from "./auth.service.js";
 
 async function register(req: Request, res: Response) {
   try {
     const { email, password } = res.locals as Register;
     const { session } = await authService.register({ email, password });
-
     const sessionCookie = auth.createSessionCookie(session.id);
 
     return res
@@ -25,6 +24,27 @@ async function register(req: Request, res: Response) {
   }
 }
 
+async function login(req: Request, res: Response) {
+  try {
+    const { email, password } = res.locals as Login;
+    const session = await authService.login({ email, password });
+
+    if (!session) {
+      return res.status(400).send("fail");
+    }
+
+    const sessionCookie = auth.createSessionCookie(session.id);
+
+    return res
+      .status(200)
+      .set("Set-Cookie", sessionCookie.serialize())
+      .send("success");
+  } catch (err) {
+    return res.status(500).send("fail");
+  }
+}
+
 export default {
   register,
+  login,
 };
