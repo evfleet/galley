@@ -1,5 +1,5 @@
-import { Register, registerSchema } from "./schemas/auth";
+import { Login, Register, loginSchema, registerSchema } from "./schemas/auth";
 
-export type { Register };
+export type { Login, Register };
 
-export { registerSchema };
+export { loginSchema, registerSchema };
