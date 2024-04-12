@@ -5,15 +5,21 @@ import { PublicRoute } from "@/components/PublicRoute";
 import { authRoutes } from "@/features/auth";
 import { miscRoutes } from "@/features/misc";
 import { recipeRoutes } from "@/features/recipes";
+import { AuthProvider } from "@/providers/AuthProvider";
 
 const router = createBrowserRouter([
   {
-    element: <PublicRoute />,
-    children: [...authRoutes],
-  },
-  {
-    element: <PrivateRoute />,
-    children: [...miscRoutes, ...recipeRoutes],
+    element: <AuthProvider />,
+    children: [
+      {
+        element: <PublicRoute />,
+        children: [...authRoutes],
+      },
+      {
+        element: <PrivateRoute />,
+        children: [...miscRoutes, ...recipeRoutes],
+      },
+    ],
   },
 ]);
 
