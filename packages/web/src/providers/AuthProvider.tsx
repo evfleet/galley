@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useState } from "react";
 import { Outlet } from "react-router-dom";
 
 type AuthContextType = {
@@ -6,7 +6,7 @@ type AuthContextType = {
   setUser: (user: string) => void;
 };
 
-const AuthContext = createContext<AuthContextType | null>(null);
+export const AuthContext = createContext<AuthContextType | null>(null);
 
 export function AuthProvider() {
   const [user, setUser] = useState("test");
@@ -16,8 +16,4 @@ export function AuthProvider() {
       <Outlet />
     </AuthContext.Provider>
   );
-}
-
-export function useAuth() {
-  return useContext(AuthContext);
 }
