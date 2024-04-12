@@ -44,7 +44,28 @@ async function login(req: Request, res: Response) {
   }
 }
 
+async function currentUser(req: Request, res: Response) {
+  try {
+    const sessionId = req.cookies[auth.sessionCookieName];
+
+    if (!sessionId) {
+      return res.status(401).send("fail");
+    }
+
+    const { user, session } = await authService.authenticate(sessionId);
+
+    if (!user || !session) {
+      return res.status(401).send("fail");
+    }
+
+    return res.status(200).send("success");
+  } catch (err) {
+    return res.status(500).send("fail");
+  }
+}
+
 export default {
   register,
   login,
+  currentUser,
 };

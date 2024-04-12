@@ -35,7 +35,15 @@ async function login({ email, password }: Login) {
   return await auth.createSession(user.id, {});
 }
 
+async function authenticate(sessionId: string) {
+  // add logic to limit attempts etc
+  const result = await auth.validateSession(sessionId);
+
+  return result;
+}
+
 export default {
   register,
   login,
+  authenticate,
 };
