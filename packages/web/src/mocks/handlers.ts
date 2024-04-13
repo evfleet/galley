@@ -6,4 +6,13 @@ export const handlers = [
       status: 200,
     });
   }),
+
+  http.get("/api/v1/auth/", () => {
+    return HttpResponse.json({
+      user: {
+        id: "1",
+        email: "",
+      },
+    });
+  }),
 ];
