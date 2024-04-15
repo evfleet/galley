@@ -9,7 +9,11 @@ type AuthContextType = {
 
 type AuthStatus = "initializing" | "ready";
 
-export const AuthContext = createContext<AuthContextType | null>(null);
+export const AuthContext = createContext<AuthContextType>({
+  user: undefined,
+  setUser: () => {},
+  status: "initializing",
+});
 
 export function AuthProvider() {
   const [user, setUser] = useState("test");
@@ -19,9 +23,10 @@ export function AuthProvider() {
     async function fetchUser() {
       const res = await fetch("/api/v1/auth/");
 
-      console.log(res);
-
-      setStatus("ready");
+      setTimeout(() => {
+        console.log(res);
+        setStatus("ready");
+      }, 3000);
     }
 
     fetchUser();
