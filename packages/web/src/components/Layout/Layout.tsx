@@ -1,16 +1,16 @@
 import { Outlet } from "react-router-dom";
 
-import { useAuth } from "@/hooks/useAuth";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
+import { useUser } from "@/features/auth";
 
 export function Layout() {
-  const { status } = useAuth();
+  const { status } = useUser();
 
   return (
     <div>
       <Header />
-      <main>{status === "initializing" ? <p>Loading...</p> : <Outlet />}</main>
+      <main>{status === "pending" ? <p>Loading...</p> : <Outlet />}</main>
       <Footer />
     </div>
   );
