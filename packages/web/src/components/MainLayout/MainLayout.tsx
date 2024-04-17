@@ -4,7 +4,7 @@ import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { useUser } from "@/features/auth";
 
-export function Layout() {
+export function MainLayout() {
   const { status } = useUser();
 
   return (
