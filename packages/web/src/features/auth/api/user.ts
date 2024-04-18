@@ -1,18 +1,22 @@
 import { useQuery } from "@tanstack/react-query";
 
 async function fetchUser() {
-  // Simulate a network request
-  await new Promise((resolve) => setTimeout(resolve, 2000));
+  const res = await fetch(`/api/v1/auth/`);
 
-  return {
-    id: 1,
-  };
+  if (!res.ok) {
+    throw new Error("An error occurred while fetching the user");
+  }
+
+  return res.json();
 }
 
 export function useUser() {
   const { data, status } = useQuery({
     queryKey: ["user"],
     queryFn: fetchUser,
+    retry: false,
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,
   });
 
   return {
