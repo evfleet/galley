@@ -3,7 +3,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 
 import { useUser } from "@/features/auth";
 
-export function PublicRoute() {
+export function GuestRoute() {
   const navigate = useNavigate();
   const { status, user } = useUser();
 

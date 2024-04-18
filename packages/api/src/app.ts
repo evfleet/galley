@@ -1,3 +1,4 @@
+import cookieParser from "cookie-parser";
 import express from "express";
 import { pinoHttp } from "pino-http";
 
@@ -9,6 +10,8 @@ export async function build() {
   const app = express();
 
   app.use(express.json());
+
+  app.use(cookieParser());
 
   app.use(pinoHttp({ logger }));
 

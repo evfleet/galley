@@ -1,17 +1,20 @@
 import { useEffect } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate, useLocation } from "react-router-dom";
 
 import { useUser } from "@/features/auth";
 
 export function PrivateRoute() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { status, user } = useUser();
 
   useEffect(() => {
     if (status !== "pending" && !user) {
-      navigate("/auth/login");
+      navigate("/auth/login", {
+        state: { from: location.pathname },
+      });
     }
-  }, [navigate, status, user]);
+  }, [navigate, status, user, location]);
 
   return <Outlet />;
 }
