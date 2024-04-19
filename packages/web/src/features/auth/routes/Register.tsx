@@ -1,7 +1,9 @@
+import { AuthLayout } from "@/components/AuthLayout";
+
 export function RegisterPage() {
   return (
-    <div>
+    <AuthLayout>
       <h1>Register</h1>
-    </div>
+    </AuthLayout>
   );
 }

@@ -1,6 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 
+import { MainLayout } from "@/components/MainLayout";
+
 export function LandingPage() {
   const { data, error, status } = useQuery({
     queryKey: ["collections"],
@@ -13,10 +15,10 @@ export function LandingPage() {
   console.log(data, error, status);
 
   return (
-    <div>
+    <MainLayout>
       <h1>Landing</h1>
       <p>You have no recipes</p>
       <Link to="/recipes/create">Create a recipe</Link>
-    </div>
+    </MainLayout>
   );
 }
