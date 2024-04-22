@@ -8,7 +8,7 @@ export function GuestRoute() {
   const { status, user } = useUser();
 
   useEffect(() => {
-    if (status !== "pending" && user) {
+    if (status !== "pending" && user === false) {
       navigate("/");
     }
   }, [navigate, status, user]);
