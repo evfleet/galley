@@ -3,6 +3,10 @@ import { useQuery } from "@tanstack/react-query";
 async function fetchUser() {
   const res = await fetch(`/api/v1/auth/`);
 
+  if (res.status === 401) {
+    return res.json();
+  }
+
   if (!res.ok) {
     throw new Error("An error occurred while fetching the user");
   }
@@ -15,8 +19,7 @@ export function useUser() {
     queryKey: ["user"],
     queryFn: fetchUser,
     retry: false,
-    refetchOnReconnect: false,
-    refetchOnWindowFocus: false,
+    staleTime: Infinity,
   });
 
   return {

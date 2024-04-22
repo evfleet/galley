@@ -1,16 +1,20 @@
-import { Outlet } from "react-router-dom";
+import { ReactNode } from "react";
 
 import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { useUser } from "@/features/auth";
 
-export function MainLayout() {
+type MainLayoutProps = {
+  children: ReactNode;
+};
+
+export function MainLayout({ children }: MainLayoutProps) {
   const { status } = useUser();
 
   return (
     <div>
       <Header />
-      <main>{status === "pending" ? <p>Loading...</p> : <Outlet />}</main>
+      <main>{status === "pending" ? <p>Loading...</p> : children}</main>
       <Footer />
     </div>
   );

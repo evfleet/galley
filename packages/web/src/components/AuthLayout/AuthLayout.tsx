@@ -1,13 +1,21 @@
-import { Outlet } from "react-router-dom";
+import { ReactNode } from "react";
 
 import { useUser } from "@/features/auth";
 
-export function AuthLayout() {
+type AuthLayoutProps = {
+  children: ReactNode;
+};
+
+export function AuthLayout({ children }: AuthLayoutProps) {
   const { status } = useUser();
 
   if (status === "pending") {
     return <p>Loading...</p>;
   }
 
-  return <Outlet />;
+  return (
+    <>
+      <main>{children}</main>
+    </>
+  );
 }
