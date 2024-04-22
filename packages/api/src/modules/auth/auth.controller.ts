@@ -49,13 +49,17 @@ async function currentUser(req: Request, res: Response) {
     const sessionId = req.cookies[auth.sessionCookieName];
 
     if (!sessionId) {
-      return res.status(401).send("fail");
+      return res.status(401).send({
+        user: false,
+      });
     }
 
     const { user, session } = await authService.authenticate(sessionId);
 
     if (!user || !session) {
-      return res.status(401).send("fail");
+      return res.status(401).send({
+        user: false,
+      });
     }
 
     return res.status(200).send("success");
