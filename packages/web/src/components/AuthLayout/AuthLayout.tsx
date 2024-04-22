@@ -15,8 +15,7 @@ export function AuthLayout({ children }: AuthLayoutProps) {
 
   return (
     <>
-      <p>Auth layout</p>
-      {children}
+      <main>{children}</main>
     </>
   );
 }
