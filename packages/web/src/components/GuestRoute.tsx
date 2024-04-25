@@ -5,13 +5,13 @@ import { useUser } from "@/features/auth";
 
 export function GuestRoute() {
   const navigate = useNavigate();
-  const { status, user } = useUser();
+  const { status, data } = useUser();
 
   useEffect(() => {
-    if (status !== "pending" && user === false) {
+    if (status !== "pending" && data.user !== false) {
       navigate("/");
     }
-  }, [navigate, status, user]);
+  }, [navigate, status, data]);
 
   return <Outlet />;
 }
