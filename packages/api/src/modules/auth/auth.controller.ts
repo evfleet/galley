@@ -48,6 +48,8 @@ async function currentUser(req: Request, res: Response) {
   try {
     const sessionId = req.cookies[auth.sessionCookieName];
 
+    console.log("session", sessionId);
+
     if (!sessionId) {
       return res.status(401).send({
         user: false,
@@ -62,7 +64,9 @@ async function currentUser(req: Request, res: Response) {
       });
     }
 
-    return res.status(200).send("success");
+    return res.status(200).send({
+      user: true,
+    });
   } catch (err) {
     return res.status(500).send("fail");
   }
