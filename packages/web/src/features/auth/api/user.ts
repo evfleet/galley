@@ -24,6 +24,6 @@ export function useUser() {
 
   return {
     status,
-    user: data,
+    data,
   };
 }

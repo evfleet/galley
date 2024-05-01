@@ -6,15 +6,15 @@ import { useUser } from "@/features/auth";
 export function PrivateRoute() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { status, user } = useUser();
+  const { status, data } = useUser();
 
   useEffect(() => {
-    if (status !== "pending" && user !== false) {
+    if (status !== "pending" && data.user === false) {
       navigate("/auth/login", {
         state: { from: location.pathname },
       });
     }
-  }, [navigate, status, user, location]);
+  }, [navigate, status, data, location]);
 
   return <Outlet />;
 }

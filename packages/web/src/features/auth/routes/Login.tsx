@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-import { AuthLayout } from "@/components/AuthLayout";
+import { AuthLayout } from "../components/AuthLayout";
 import { AuthFormLayout } from "../components/AuthFormLayout";
 import { AuthHeader } from "../components/AuthHeader";
 import { AuthFooter } from "../components/AuthFooter";
